@@ -1,12 +1,50 @@
-import React from 'react'
-import { Input, Text, Card } from '@ui-kitten/components';
-import { View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react'
+import { Input, Text, Card, Button } from '@ui-kitten/components';
+import { View, StyleSheet, TouchableOpacity, Alert} from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 const Home = ({navigation}) => {
-    const [flexDirection, setFlexDirection] = React.useState('column')
+    // Set an initializing state whilst Firebase connects
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState()
+
+    // Handle user state changes
+    const onAuthStateChanged = (user) => {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+
+    const onSignOut = () => {
+        auth()
+        .signOut()
+        .then(() => {
+            Alert.alert('Anda Berhasil Keluar Akun')
+            navigation.navigate('LoginScreen')
+        });
+    }
+
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+    
+    if (initializing) return null;
+
+    if (!user) {
+        return (
+          <View>
+            <Text>Login Dulu!</Text>
+          </View>
+        );
+      }
+
+
 
     return (
+        <>
+        <Text style={styles.welcome}>Selamat datang kak {user.email}</Text>
         <View style={styles.wrapper}>
+            
             <View style={styles.containerBox}>
                 <View style={[styles.box, {backgroundColor: '#93CB93'}]}>
                     <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
@@ -29,8 +67,9 @@ const Home = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
             </View>
-
+            <Button style={styles.btnSignout} onPress={onSignOut}>Keluar</Button>
         </View>
+        </>
     )
 }
 
@@ -42,12 +81,19 @@ const styles = StyleSheet.create({
         paddingLeft: 20,
         paddingRight: 20,
     },
+    welcome: {
+        backgroundColor: '#102C75',
+        paddingLeft: 20,
+        paddingRight: 20,
+        color: '#fff',
+        paddingTop: 20
+    },
     containerBox: {
         flexDirection: 'row',
     },
     box: {
         height: 100,
-        width: '50%',
+        width: '48%',
         backgroundColor: 'orange',
         marginRight: 10,
         marginTop: 10,
@@ -57,6 +103,9 @@ const styles = StyleSheet.create({
     titleBox: {
         textAlign: 'center',
         fontWeight: 'bold'
+    },
+    btnSignout: {
+        marginTop: 20
     }
 });
 

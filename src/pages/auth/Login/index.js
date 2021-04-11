@@ -1,14 +1,33 @@
-import React from 'react'
-import { Input, Text, Button, Icon } from '@ui-kitten/components';
-import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import React, {useState} from 'react'
+import { Input, Text, Button, Icon} from '@ui-kitten/components';
+import { View, StyleSheet, TouchableWithoutFeedback, Alert } from 'react-native';
+import auth from '@react-native-firebase/auth'
 
 const AlertIcon = (props) => (
     <Icon {...props} name='alert-circle-outline'/>
 );
 
 const Login = ({navigation}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [secureTextEntry, setSecureTextEntry] = React.useState(true);
-    
+
+    const onLoginPress = () => {
+        // console.log(email + " " + password)
+        auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+            setEmail('');
+            setPassword('');
+            Alert.alert(email + ' Berhasil Login');
+            navigation.navigate('HomeScreen')
+        })
+        .catch(error => {
+            Alert.elert(error.code);
+        });
+       
+    }
+
     const toggleSecureEntry = () => {
         setSecureTextEntry(!secureTextEntry);
     };
@@ -30,12 +49,10 @@ const Login = ({navigation}) => {
                 caption='Gunakan @gmail.com'
                 style={styles.input}
                 captionIcon={AlertIcon}
-                // value={value}
-                // onChangeText={nextValue => setValue(nextValue)}
-                // style={{backgroundColor: 'white'}
+                value={email}
+                onChangeText={text => setEmail(text)}
             />
             <Input
-                // value={value}
                 label='Password'
                 placeholder='Masukan kata sandi'
                 caption='Minimal 6 huruf'
@@ -43,9 +60,10 @@ const Login = ({navigation}) => {
                 captionIcon={AlertIcon}
                 secureTextEntry={secureTextEntry}
                 style={styles.input}
-                // onChangeText={nextValue => setValue(nextValue)}
+                value={password}
+                onChangeText={text => setPassword(text)}
             />
-                <Button style={styles.button} status="warning" onPress={() => navigation.navigate('HomeScreen')}>Masuk</Button>
+                <Button style={styles.button} status="warning" onPress={onLoginPress}>Masuk</Button>
                 <Text style={{color: '#fff', textAlign: 'center', padding: 10}}>Belum punya akun?</Text>
                 <Button style={styles.button} status="warning" onPress={() => navigation.navigate('SignupScreen')}>Daftar</Button>
                 

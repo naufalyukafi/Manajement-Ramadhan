@@ -18,9 +18,26 @@ import {
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import Firebase from "@react-native-firebase/app"
 import Router from "./src/router"
 
+var firebaseConfig2 = {
+  apiKey: "AIzaSyD_v1VVS9tYacG5PhVvJqEuhQvsexmorMA",
+  authDomain: "hil-ramadhan-a4f62.firebaseapp.com",
+  projectId: "hil-ramadhan-a4f62",
+  storageBucket: "hil-ramadhan-a4f62.appspot.com",
+  messagingSenderId: "7447312769",
+  appId: "1:7447312769:web:8469ce3f51d6ce7368d080",
+  measurementId: "G-VNXRVN6SJ2"
+};
+
+if(!Firebase.apps.length){
+  Firebase.initializeApp(firebaseConfig2)
+}
+
 const App = () => {
+
+
   return (
     <>
       <IconRegistry icons={EvaIconsPack} />
