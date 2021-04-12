@@ -21,7 +21,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import Firebase from "@react-native-firebase/app"
 import Router from "./src/router"
 
-var firebaseConfig2 = {
+var firebaseConfig = {
   apiKey: "AIzaSyD_v1VVS9tYacG5PhVvJqEuhQvsexmorMA",
   authDomain: "hil-ramadhan-a4f62.firebaseapp.com",
   projectId: "hil-ramadhan-a4f62",
@@ -32,7 +32,7 @@ var firebaseConfig2 = {
 };
 
 if(!Firebase.apps.length){
-  Firebase.initializeApp(firebaseConfig2)
+  Firebase.initializeApp(firebaseConfig)
 }
 
 const App = () => {
