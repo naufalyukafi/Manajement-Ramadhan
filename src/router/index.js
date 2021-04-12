@@ -5,7 +5,7 @@ import { Button, Icon } from '@ui-kitten/components';
 import { createDrawerNavigator } from "@react-navigation/drawer"
 
 import {LoginScreen, SignupScreen} from "../pages/auth"
-import {HomeScreen, TodoScreen} from "../pages/public"
+import {HomeScreen, TodoScreen, TodoAlScreen, TodoPagiScreen, TodoSoreScreen} from "../pages/public"
 
 import {TouchableWithoutFeedback} from "react-native"
 
@@ -46,14 +46,14 @@ const HomeStack = ({navigation}) => {
                             onPress={() => navigation.goBack()}  
                             status="basic" 
                             style={{backgroundColor: '#fff', marginRight: 10}} 
-                            
-
                         />
                     )
                 }}
             />
-            <Stack.Screen name="Todo" component={TodoScreen} />
-            {/* <Stack.Screen component={HomeDrawer} /> */}
+            <Stack.Screen name="Todo List Al-Qur'an" component={TodoScreen} option={{ headerTitle: "Todo List Al-Qur'an"}} />
+            <Stack.Screen name="Todo List Al-Ma'tsurat" component={TodoAlScreen} />
+            <Stack.Screen name="Todo List Al-Ma'tsurat Pagi" component={TodoPagiScreen} />
+            <Stack.Screen name="Todo List Al-Ma'tsurat Sore" component={TodoSoreScreen} />
         </Stack.Navigator>
     )
 
@@ -63,10 +63,10 @@ const TodoStack = () => {
     return(
         <Stack.Navigator>
             <Stack.Screen 
-                name="Todo" 
+                name="Todo List Al-Qur'an" 
                 component={TodoScreen} 
                 options={{
-                    headerTitle: "Todo",
+                    headerTitle: "Todo List Al-Qur'an",
                     headerLeft: false,
                     headerRight: () => (
                         <Button 
@@ -89,7 +89,7 @@ const Router = () => {
         <NavigationContainer>
             <Drawer.Navigator initialRouteName="Beranda">
                 <Drawer.Screen name="Beranda" component={HomeStack} />
-                <Drawer.Screen name="Todo" component={TodoStack} />
+                <Drawer.Screen name="Todo List Al-Qur'an" component={TodoStack} />
             </Drawer.Navigator>
         </NavigationContainer>
     )

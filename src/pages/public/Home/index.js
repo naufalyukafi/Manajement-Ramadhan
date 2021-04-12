@@ -42,20 +42,20 @@ const Home = ({navigation}) => {
 
     return (
         <>
-        <Text style={styles.welcome}>Selamat datang kak {user.email}</Text>
+        <Text style={styles.welcome}>Halo kak {user.email}, silahkan mengikuti Event Hafidz IT yah!</Text>
         <View style={styles.wrapper}>
             
             <View style={styles.containerBox}>
                 <View style={[styles.box, {backgroundColor: '#93CB93'}]}>
-                    <TouchableOpacity onPress={() => navigation.navigate('Todo')}>
+                    <TouchableOpacity onPress={() => navigation.navigate("Todo List Al-Qur'an")}>
                         <Text style={styles.titleBox} >To Do List Al-Qur'an</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.box}>
-                    <TouchableOpacity><Text style={styles.titleBox}>Istighfar</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate("Todo List Al-Ma'tsurat")}><Text style={styles.titleBox}> Todo Al Ma'tsurat</Text></TouchableOpacity>
                 </View>
             </View>
-            <View style={styles.containerBox}>
+            {/* <View style={styles.containerBox}>
                 <View style={styles.box}>
                     <TouchableOpacity>
                         <Text style={styles.titleBox}>Baca Al-Qur'an</Text>
@@ -66,7 +66,7 @@ const Home = ({navigation}) => {
                         <Text style={styles.titleBox}>FAQ?</Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </View> */}
             <Button style={styles.btnSignout} onPress={onSignOut}>Keluar</Button>
         </View>
         </>
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     box: {
         height: 100,
         width: '48%',
-        backgroundColor: 'orange',
+        backgroundColor: '#FDC945',
         marginRight: 10,
         marginTop: 10,
         justifyContent: 'center',

@@ -1,17 +1,17 @@
 import React, {useState, useEffect} from 'react'
-import {StyleSheet, View, FlatList, Alert} from 'react-native'
+import {StyleSheet, View, FlatList, Alert, TouchableOpacity} from 'react-native'
 import { Input,  Button, Spinner, Text } from '@ui-kitten/components';
-import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
-import Cards from '../../../components/Cards'
+import Sore from '../../../components/CardAl/Sore'
 
-const Todo = () => {
+const TodoSore = () => {
     const [todo, setTodo] = useState('')
     const [loading, setLoading] = useState(true)
     const [todos, setTodos] = useState([])
 
     var user = auth().currentUser;
-    const ref = firestore().collection(user.uid)
+    const ref = firestore().collection(user.uid + 'sore')
 
     async function addTodo() {
         if(todo === ''){
@@ -26,7 +26,6 @@ const Todo = () => {
        
     }
 
-    
     useEffect(() => {
         return ref.onSnapshot((querySnapshot) => {
             const list = []
@@ -55,24 +54,25 @@ const Todo = () => {
         )
     }
 
+
     return (
-         <>
-            <View style={styles.wrapper}>
-                <FlatList
-                    style={{flex: 1}}
-                    data={todos}
-                    keyExtractor={(item) => item.id}
-                    renderItem={({item}) => <Cards {...item} />}
-                />
-            </View>
-            <Input 
-                value={todo}
-                onChangeText={setTodo}
-                placeholder="1. Hari pertama puasa ramadhan ~ contoh"
-                style={styles.input}
+        <>
+        <View style={styles.wrapper}>
+            <FlatList
+                style={{flex: 1}}
+                data={todos}
+                keyExtractor={(item) => item.id}
+                renderItem={({item}) => <Sore {...item} />}
             />
-            <Button onPress={() => addTodo()}>Submit</Button>
-        </>    
+        </View>
+        <Input 
+            value={todo}
+            onChangeText={setTodo}
+            placeholder="1. Hari pertama puasa ramadhan ~ contoh"
+            style={styles.input}
+        />
+        <Button onPress={(() => addTodo())}>Submit</Button>
+    </>    
     )
 }
 
@@ -82,7 +82,20 @@ const styles = StyleSheet.create({
         backgroundColor: '#102C75',
         paddingLeft: 20,
         paddingRight: 20,
+        justifyContent: 'center',
+        
+    },
+    btnTitle: {
+        backgroundColor: 'orange',
+        marginTop: 20,
+        paddingBottom: 20,
+        borderRadius: 50
+    },
+    textTitle: {
+        fontWeight: 'bold',
+        marginTop: 20,
+        textAlign: 'center'
     }
 })
 
-export default Todo
+export default TodoSore

@@ -4,11 +4,20 @@ import {StyleSheet} from 'react-native'
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'
 
-const Cards = ({id, title, complete}) => {
+const CardAl = ({id, title, complete}) => {
     var user = auth().currentUser;
-    async function toggleComplete(){
+
+    async function toggleCompletePagi(){
         await firestore()
-            .collection(user.uid)
+            .collection(user.uid + 'pagi')
+            .doc(id)
+            .update({
+                complete: !complete
+            })
+    }
+    async function toggleCompleteSore(){
+        await firestore()
+            .collection(user.uid + 'sore')
             .doc(id)
             .update({
                 complete: !complete
@@ -23,10 +32,22 @@ const Cards = ({id, title, complete}) => {
             <ListItem
                 title={title} 
                 accessoryLeft={CheckIcon}    
-                onPress={() => toggleComplete()}
-            />
+                onPress={() => toggleCompletePagi()}
+            /> 
+            {/* {user.uid + 'pagi' ? 
+            <ListItem
+                title={title} 
+                accessoryLeft={CheckIcon}    
+                onPress={() => toggleCompletePagi()}
+            /> : user.uid + 'sore' ?  
+            <ListItem
+                title={title} 
+                accessoryLeft={CheckIcon}    
+                onPress={() => toggleCompleteSore()}
+            /> : ''
+            } */}
+            
         </Card>
-        
     )
 }
 
@@ -40,4 +61,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default React.memo(Cards)
+export default React.memo(CardAl)
